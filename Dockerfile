@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apt-get install -y netcat
+RUN apt update && apt install -y nginx
 
 # install dependencies
 RUN pip install --upgrade pip
@@ -17,3 +17,5 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . .
+
+CMD ["gunicorn", "core.wsgi:application", "-b", "0.0.0.0:8000"]
